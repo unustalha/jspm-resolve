@@ -1,12 +1,11 @@
 {
   "name": "jspm-resolve",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module resolver for jspm packages",
   "main": "./dist/index.js",
   "dependencies": {
     "babel": "^5.8.23",
     "find-root": "^0.1.1",
-    "jspm": "^0.16.2",
     "resolve": "^1.1.6"
   },
   "devDependencies": {
@@ -25,6 +24,9 @@
     "gulp-notify": "^2.2.0",
     "gulp-util": "^3.0.6",
     "mocha": "^2.3.2"
+  },
+  "peerDependencies": {
+    "jspm": "^0.16.2"
   },
   "keywords": [
     "eslint",
