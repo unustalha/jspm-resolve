@@ -1,0 +1,6 @@
+.arcconfig
+*.yml
+build/
+jspm_packages/
+node_modules/
+src/
