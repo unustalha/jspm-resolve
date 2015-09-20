@@ -29,7 +29,12 @@ const resolver = (id, opts = {}, cb, sync = false) => {
         }
 
         // Colons not allowed on file systems
-        const targetPath = target.replace(":", "/");
+        let targetPath = target.replace(":", "/");
+
+        // jspm only uses .js for packages
+        if (!(/\.js$/).test(targetPath)) {
+            targetPath = `${targetPath}.js`;
+        }
 
         if (sync) {
             return npmResolver.sync(targetPath, opts);
