@@ -9,12 +9,15 @@ import npmResolver from "resolve";
  * @param  {Boolean} sync     Perform a synchronous resolve
  * @return {Boolean}
  */
+let root, map;
+
 const resolver = (id, opts = {}, cb, sync = false) => {
     try {
-        const root = findRoot(process.cwd());
-
-        jspm.setPackagePath(root);
-        const {map} = jspm.Loader({});
+        if (!root) {
+            root = findRoot(process.cwd());
+            jspm.setPackagePath(root);
+            map = jspm.Loader().map;
+        }
 
         if (!map) {
             return null;
