@@ -10,8 +10,18 @@ import npmResolver from "resolve";
  * @return {Boolean}
  */
 let root, map;
+const resolveCache = {};
 
 const resolver = (id, opts = {}, cb, sync = false) => {
+    // Return cached resolve if found
+    if (resolveCache[id]) {
+        if (!sync && cb) {
+            return cb(null, resolveCache[id]);
+        }
+
+        return resolveCache[id];
+    }
+
     try {
         if (!root) {
             root = findRoot(process.cwd());
@@ -40,12 +50,22 @@ const resolver = (id, opts = {}, cb, sync = false) => {
         }
 
         if (sync) {
-            return npmResolver.sync(targetPath, opts);
+            const found = npmResolver.sync(targetPath, opts);
+            resolveCache[id] = found;
+
+            return found;
         }
 
-        return npmResolver(targetPath, opts, cb);
+        npmResolver(targetPath, opts, (err, result) => {
+            resolveCache[id] = result;
+
+            if (cb) {
+                return cb(err, result);
+            }
+        });
     } catch (e) {
-        return false;
+        resolveCache[id] = false;
+        return resolveCache[id];
     }
 };
 
