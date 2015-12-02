@@ -5,26 +5,26 @@
   "main": "./dist/index.js",
   "dependencies": {
     "find-root": "^0.1.1",
-    "jspm": "^0.16.11",
+    "jspm": "^0.16.15",
     "resolve": "^1.1.6"
   },
   "devDependencies": {
     "babel": "^5.8.23",
-    "babel-eslint": "^4.1.3",
-    "chai": "^3.3.0",
+    "babel-eslint": "^4.1.6",
+    "chai": "^3.4.1",
     "chalk": "^1.1.1",
-    "del": "^2.0.2",
-    "eslint": "^1.5.1",
+    "del": "^2.1.0",
+    "eslint": "^1.10.3",
     "eslint-config-nfl": "^4.0.2",
-    "eslint-plugin-react": "^3.5.0",
+    "eslint-plugin-react": "^3.11.2",
     "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
-    "gulp-debug": "^2.1.0",
-    "gulp-eslint": "^1.0.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-eslint": "^1.1.1",
     "gulp-if": "^1.2.5",
     "gulp-notify": "^2.2.0",
-    "gulp-util": "^3.0.6",
-    "mocha": "^2.3.3"
+    "gulp-util": "^3.0.7",
+    "mocha": "^2.3.4"
   },
   "keywords": [
     "eslint",
