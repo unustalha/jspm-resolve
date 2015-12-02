@@ -24,7 +24,7 @@ const resolver = (id, opts = {}, cb, sync = false) => {
 
     try {
         if (!root) {
-            root = findRoot(process.cwd());
+            root = findRoot(opts.basedir || process.cwd());
             jspm.setPackagePath(root);
             map = jspm.Loader().map;
         }
