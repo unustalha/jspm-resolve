@@ -1,6 +1,15 @@
 .arcconfig
+.babelrc
+.editorconfig
+.eslintignore
+.eslintrc
 *.yml
+gulpfile.js
+system.config.js
 build/
+config/
+custom_jspm_packages/
 jspm_packages/
 node_modules/
 src/
+plugins/
