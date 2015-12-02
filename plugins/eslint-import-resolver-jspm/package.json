@@ -1,0 +1,17 @@
+{
+  "name": "eslint-import-resolver-jspm",
+  "version": "1.0.0",
+  "description": "A jspm resolver for eslint-plugin-import",
+  "main": "index.js",
+  "keywords": [
+    "eslint",
+    "eslint-plugin-import",
+    "eslint-import-resolver",
+    "eslint-import-resolver-jspm"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jspm-resolve": "^1.0.7"
+  }
+}
