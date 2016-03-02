@@ -19,11 +19,11 @@ module.exports = function (gulp, config) {
                     return false;
                 }
 
-                var errors = file.eslint.messages.map(function (data) {
-                    if (data.message) {
+                var errors = file.eslint.messages
+                    .filter(function (data) {return data.message;})
+                    .map(function (data) {
                         return "(" + data.line + ":" + data.column + ") " + data.message;
-                    }
-                }).join("\n");
+                    }).join("\n");
 
                 var errorString = file.relative + " (" + file.eslint.messages.length + " errors)\n" + errors;
 

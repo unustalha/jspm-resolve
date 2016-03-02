@@ -38,7 +38,24 @@ const resolver = (id, opts = {}, cb, sync = false) => {
         const target = map[jspmPackage];
 
         if (!target) {
-            return null;
+            // Not a jspm package, check file system
+            const filePath = id.replace(":", "/");
+            // If it's an image or css ignore it
+            if ((/\.(css|gif|jpg|jpeg|tiff|png)$/i).test(filePath)) {
+                return null;
+            }
+
+            // Check if string does not begin with / ./ or ../
+            if (!(/^(\/|\.\/|\.\.\/)/).test(filePath)) {
+                if (sync) {
+                    const found = npmResolver.sync(filePath, opts);
+                    resolveCache[id] = found;
+
+                    return found;
+                }
+            }
+            resolveCache[id] = false;
+            return resolveCache[id];
         }
 
         // Colons not allowed on file systems

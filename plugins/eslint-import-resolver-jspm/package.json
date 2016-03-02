@@ -12,6 +12,19 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "jspm-resolve": "^1.0.7"
+    "jspm-resolve": "^1.0.8"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "jspm": {
+    "dependencies": {},
+    "devDependencies": {
+      "jquery": "npm:jquery@^2.2.1"
+    }
   }
 }
