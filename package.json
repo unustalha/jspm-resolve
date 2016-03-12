@@ -47,9 +47,8 @@
     "lint": "gulp eslint",
     "compile": "babel src --out-dir dist",
     "pretest": "jspm install",
-    "test": "npm run test:jspm-resolve && npm run test:eslint-import-resolver-jspm",
-    "test:jspm-resolve": "mocha ./dist/test -R spec",
-    "test:eslint-import-resolver-jspm": "(cd ./plugins/eslint-import-resolver-jspm && npm test)",
+    "test": "mocha ./dist/test -R spec",
+    "test:eslint-import-resolver-jspm": "(cd ./plugins/eslint-import-resolver-jspm && npm install && npm link ../../ && npm test)",
     "prepublish": "npm run build"
   },
   "jspm": {
