@@ -19,7 +19,8 @@
     "mocha": "^2.3.4"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "pretest": "jspm install",
+    "test": "mocha ./test/pathsTest.js -R spec"
   },
   "jspm": {
     "dependencies": {},
