@@ -1,6 +1,6 @@
 {
   "name": "eslint-import-resolver-jspm",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A jspm resolver for eslint-plugin-import",
   "main": "index.js",
   "keywords": [
@@ -12,6 +12,20 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "jspm-resolve": "^1.0.7"
+    "jspm-resolve": "^1.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
+  "scripts": {
+    "pretest": "jspm install",
+    "test": "mocha ./test/pathsTest.js -R spec"
+  },
+  "jspm": {
+    "dependencies": {},
+    "devDependencies": {
+      "jquery": "npm:jquery@^2.2.1"
+    }
   }
 }

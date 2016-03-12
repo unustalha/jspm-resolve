@@ -12,7 +12,34 @@ describe("jspm-resolve", () => {
 
     const dependencies = pkg.jspm.dependencies;
 
-    describe("-> should resolve jspm packages", () => {
+    describe("-> resolves jspm aliases", () => {
+        it("-> asynchronous", (done) => {
+            const alias = "alias/aliasImportTest.js";
+
+            resolve(alias, resolveOpts, (err, result) => {
+                expect(result)
+                    .to.be.a.string;
+
+                expect(result)
+                    .to.have.string(alias);
+
+                done();
+            });
+        });
+
+        it("-> synchronous", () => {
+            const alias = "alias/aliasImportTest.js";
+            const result = resolve.sync(alias, resolveOpts);
+
+            expect(result)
+                .to.be.a.string;
+
+            expect(result)
+                .to.have.string(alias);
+        });
+    });
+
+    describe("-> resolves jspm packages", () => {
         describe("-> asynchronous", () => {
             Object.keys(dependencies).forEach((dependency) => {
                 it(dependency, (done) => {
@@ -44,7 +71,7 @@ describe("jspm-resolve", () => {
         });
     });
 
-    describe("-> should identify core modules", () => {
+    describe("-> identifies core modules", () => {
         const testModules = [
             "child_process",
             "cluster",
@@ -64,12 +91,12 @@ describe("jspm-resolve", () => {
         }
     });
 
-    it("should not find an npm module", () => {
+    it("does not find npm modules", () => {
         const testModule = "find-root";
 
         const result = resolve.sync(testModule, resolveOpts);
 
         expect(result)
-            .to.equal(null);
+            .to.equal(false);
     });
 });

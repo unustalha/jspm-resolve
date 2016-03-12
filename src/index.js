@@ -1,4 +1,5 @@
 import jspm from "jspm";
+import path from "path";
 import findRoot from "find-root";
 import npmResolver from "resolve";
 
@@ -9,7 +10,8 @@ import npmResolver from "resolve";
  * @param  {Boolean} sync     Perform a synchronous resolve
  * @return {Boolean}
  */
-let root, map;
+let root, loader;
+const cwd = process.cwd();
 const resolveCache = {};
 
 const resolver = (id, opts = {}, cb, sync = false) => {
@@ -24,43 +26,37 @@ const resolver = (id, opts = {}, cb, sync = false) => {
 
     try {
         if (!root) {
-            root = findRoot(opts.basedir || process.cwd());
+            root = findRoot(opts.basedir || cwd);
             jspm.setPackagePath(root);
-            map = jspm.Loader().map;
+            loader = jspm.Loader();
         }
 
-        if (!map) {
-            return null;
+        let normalizedPath = loader.normalizeSync(id).replace("file://", "");
+
+        if ((/\.(?:css|eot|gif|jpe?g|json|otf|png|swf|svg|ttf|woff)\.js$/).test(normalizedPath)) {
+            normalizedPath = normalizedPath.replace(/\.js$/, "");
         }
 
-        const [jspmPackage] = id.split("/");
-
-        const target = map[jspmPackage];
-
-        if (!target) {
-            return null;
-        }
-
-        // Colons not allowed on file systems
-        let targetPath = target.replace(":", "/");
-
-        // jspm only uses .js for packages
-        if (!(/\.js$/).test(targetPath)) {
-            targetPath = `${targetPath}.js`;
+        if (opts.pathsOverride) {
+            Object.keys(opts.pathsOverride).forEach(key => {
+                normalizedPath = normalizedPath.replace(
+                    path.join(root, key),
+                    path.join(root, opts.pathsOverride[key])
+                );
+            });
         }
 
         if (sync) {
-            const found = npmResolver.sync(targetPath, opts);
-            resolveCache[id] = found;
-
-            return found;
+            const found = npmResolver.sync(normalizedPath, opts);
+            resolveCache[id] = found ? normalizedPath : found;
+            return resolveCache[id];
         }
 
-        npmResolver(targetPath, opts, (err, result) => {
-            resolveCache[id] = result;
+        npmResolver(normalizedPath, opts, (err, found) => {
+            resolveCache[id] = found ? normalizedPath : found;
 
             if (cb) {
-                return cb(err, result);
+                return cb(err, resolveCache[id]);
             }
         });
     } catch (e) {
