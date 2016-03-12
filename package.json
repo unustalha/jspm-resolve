@@ -3,6 +3,10 @@
   "version": "1.0.8",
   "description": "A module resolver for jspm packages",
   "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nfl/jspm-resolve.git"
+  },
   "dependencies": {
     "find-root": "^0.1.1",
     "jspm": "^0.16.15",
@@ -13,6 +17,7 @@
     "babel-eslint": "^5.0.0",
     "chai": "^3.4.1",
     "chalk": "^1.1.1",
+    "cz-conventional-changelog": "^1.1.5",
     "del": "^2.1.0",
     "eslint": "2.2.0",
     "eslint-config-nfl": "^6.0.1",
@@ -54,5 +59,10 @@
       "when": "github:cujojs/when@^3.7.3"
     },
     "devDependencies": {}
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
