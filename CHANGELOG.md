@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/nfl/jspm-resolve/compare/1.1.0...v1.1.1) (2016-03-22)
+
+
+### Bug Fixes
+
+* **jspm-resolve:** Return undefined on missing jspm packages ([7826d5d](https://github.com/nfl/jspm-resolve/commit/7826d5d))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/nfl/jspm-resolve/compare/1.0.7...v1.1.0) (2016-03-12)
 

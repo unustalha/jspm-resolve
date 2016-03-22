@@ -1,6 +1,6 @@
 {
   "name": "jspm-resolve",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A module resolver for jspm packages",
   "main": "./dist/index.js",
   "repository": {
