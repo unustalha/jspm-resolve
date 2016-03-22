@@ -97,6 +97,6 @@ describe("jspm-resolve", () => {
         const result = resolve.sync(testModule, resolveOpts);
 
         expect(result)
-            .to.equal(false);
+            .to.equal(undefined);
     });
 });
