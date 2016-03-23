@@ -8,7 +8,7 @@
     "url": "https://github.com/nfl/jspm-resolve.git"
   },
   "dependencies": {
-    "find-root": "^0.1.1",
+    "find-root": "^1.0.0",
     "jspm": "^0.16.15",
     "resolve": "^1.1.6"
   },
@@ -20,19 +20,13 @@
     "conventional-changelog-cli": "^1.1.1",
     "cz-conventional-changelog": "^1.1.5",
     "del": "^2.1.0",
-    "eslint": "2.2.0",
-    "eslint-config-nfl": "^6.0.1",
-    "eslint-plugin-import": "^1.0.3",
+    "eslint": "2.4.0",
+    "eslint-config-nfl": "^6.1.0",
+    "eslint-plugin-import": "^1.2.0",
     "eslint-plugin-mocha": "^2.0.0",
-    "eslint-plugin-react": "^3.16.1",
-    "gulp": "^3.9.0",
-    "gulp-cached": "^1.1.0",
-    "gulp-debug": "^2.1.2",
-    "gulp-eslint": "^2.0.0",
-    "gulp-if": "^1.2.5",
-    "gulp-notify": "^2.2.0",
-    "gulp-util": "^3.0.7",
-    "mocha": "^2.3.4"
+    "eslint-plugin-react": "^4.2.3",
+    "mocha": "^2.3.4",
+    "rimraf": "^2.5.2"
   },
   "keywords": [
     "eslint",
@@ -44,13 +38,15 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run clean && npm run lint && npm run compile",
+    "build-plugin": "(cd ./plugins/eslint-import-resolver-jspm && npm link ../../ && npm install)",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "clean": "gulp clean",
-    "lint": "gulp eslint",
+    "clean": "rimraf dist",
+    "lint": "eslint src/* plugins/eslint-import-resolver-jspm/index.js",
     "compile": "babel src --out-dir dist",
-    "pretest": "jspm install",
+    "pretest": "jspm install && npm run build && npm run build-plugin",
     "test": "mocha ./dist/test -R spec",
-    "test:eslint-import-resolver-jspm": "(cd ./plugins/eslint-import-resolver-jspm && npm link ../../ && npm install && npm test)",
+    "pretest:eslint-import-resolver-jspm": "npm run build-plugin",
+    "test:eslint-import-resolver-jspm": "(cd ./plugins/eslint-import-resolver-jspm && npm test)",
     "prepublish": "npm run build"
   },
   "jspm": {
