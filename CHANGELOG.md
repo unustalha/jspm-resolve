@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/nfl/jspm-resolve/compare/1.1.1...v1.2.0) (2016-03-23)
+
+
+### Features
+
+* **jspm-resolve:** Add configurable root directory ([c70d0d1](https://github.com/nfl/jspm-resolve/commit/c70d0d1)), closes [#3](https://github.com/nfl/jspm-resolve/issues/3)
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/nfl/jspm-resolve/compare/1.1.0...v1.1.1) (2016-03-22)
 
