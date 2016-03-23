@@ -39,7 +39,47 @@ settings:
 }
 ```
 
-`jspm-resolve` methods and parameters are identical to [resolve](https://www.npmjs.com/package/resolve).
+`eslint-plugin-import` parameters are identical to [resolve](https://www.npmjs.com/package/resolve), plus these:
+
+- `pathsOverride`: _(Object)_ Override paths set in your jspm config file.
+- `rootDir`: _(String)_ Specify a custom jspm root directory (relative to your project's root).
+
+#### Sample config
+
+```js
+{
+    "plugins": [
+        "import"
+    ],
+    "settings": {
+        "import/ignore": [
+            "jspm_packages",
+            "node_modules",
+            ".(scss|less|css)$",
+            ".[^js(x)?]+$"
+        ],
+        "import/resolve": {
+            "moduleDirectory": [
+                "jspm_packages",
+                "node_modules",
+                "."
+            ]
+        },
+        "import/resolver": {
+            "jspm": {
+                "moduleDirectory": "jspm_packages", // Override, don't look for jspm_packages in node_modules
+                "pathsOverride": {
+                    "public": "src" // maps public/foo.js -> src/foo.js
+                },
+                "rootDir": "./path/to/custom/jspmRootDir"
+            },
+
+            "node": true // Set to true to fall back to Node resolver
+        }
+    }
+}
+```
+
 
 See [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) for a full list of options.
 

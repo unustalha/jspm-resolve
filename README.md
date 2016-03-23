@@ -14,8 +14,11 @@ A module resolver that locates jspm packages using [resolve](https://www.npmjs.c
 npm install --save-dev jspm-resolve
 ```
 
-## Methods
-`jspm-resolve` methods and parameters are identical to [resolve](https://www.npmjs.com/package/resolve)
+## Parameters
+`jspm-resolve` takes the same parameters as [resolve](https://www.npmjs.com/package/resolve), plus these:
+
+- `pathsOverride`: _(Object)_ Override paths set in your jspm config file.
+- `rootDir`: _(String)_ Specify a custom jspm root directory (relative to your project's root).
 
 ## Asynchronous use
 

@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import resolve from "../";
 import pkg from "../../package.json";
+import pluginPkg from "../../plugins/eslint-import-resolver-jspm/package.json";
 
 describe("jspm-resolve", () => {
     const resolveOpts = {
@@ -89,6 +90,44 @@ describe("jspm-resolve", () => {
                     .to.be.true;
             });
         }
+    });
+
+    describe("-> resolves jspm packages with a specified root directory", () => {
+        const pluginDevDependencies = pluginPkg.jspm.devDependencies;
+
+        const customResolveOpts = Object.assign({}, resolveOpts, {
+            rootDir: "./plugins/eslint-import-resolver-jspm"
+        });
+
+        describe("-> asynchronous", () => {
+            Object.keys(pluginDevDependencies).forEach((dependency) => {
+                it(dependency, (done) => {
+                    resolve(dependency, customResolveOpts, (err, result) => {
+                        expect(result)
+                            .to.be.a.string;
+
+                        expect(result)
+                            .to.have.string(dependency);
+
+                        done();
+                    });
+                });
+            });
+        });
+
+        describe("-> synchronous", () => {
+            Object.keys(pluginDevDependencies).forEach((dependency) => {
+                it(dependency, () => {
+                    const result = resolve.sync(dependency, customResolveOpts);
+
+                    expect(result)
+                        .to.be.a.string;
+
+                    expect(result)
+                        .to.have.string(dependency);
+                });
+            });
+        });
     });
 
     it("does not find npm modules", () => {

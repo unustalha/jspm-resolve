@@ -1,2 +1,4 @@
 src/vendor
 system.config.js
+node_modules
+jspm_packages
