@@ -1,3 +1,14 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/nfl/jspm-resolve/compare/1.2.0...v2.0.0) (2016-03-26)
+
+
+### Bug Fixes
+
+* **eslint-import-resolver-jspm:** Update eslint-plugin-import API ([27b6ecd](https://github.com/nfl/jspm-resolve/commit/27b6ecd))
+* **jspm-resolve:** Update eslint-plugin-import API ([2586729](https://github.com/nfl/jspm-resolve/commit/2586729))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/nfl/jspm-resolve/compare/1.1.1...v1.2.0) (2016-03-23)
 

@@ -1,6 +1,6 @@
 {
   "name": "jspm-resolve",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A module resolver for jspm packages",
   "main": "./dist/index.js",
   "repository": {
@@ -22,7 +22,7 @@
     "del": "^2.1.0",
     "eslint": "2.4.0",
     "eslint-config-nfl": "^6.1.0",
-    "eslint-plugin-import": "^1.2.0",
+    "eslint-plugin-import": "^1.4.0",
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.2.3",
     "estraverse": "^4.2.0",

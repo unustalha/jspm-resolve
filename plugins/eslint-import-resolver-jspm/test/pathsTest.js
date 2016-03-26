@@ -12,8 +12,18 @@ const opts = {
 };
 
 describe("paths", function () {
-    it("handles modules from jspm", function () {
+    it("returns true when a module is found", () => {
         expect(jspm.resolveImport("jquery", "jquery", opts))
-            .to.equal(path.resolve(__dirname, "../jspm_packages/npm/jquery@2.2.1.js"));
+            .to.eql({
+                found: true,
+                path: path.resolve(__dirname, "../jspm_packages/npm/jquery@2.2.1.js")
+            });
+    });
+
+    it("returns false when a module is not found", () => {
+        expect(jspm.resolveImport("react", "react", opts))
+            .to.eql({
+                found: false
+            });
     });
 });
