@@ -48,19 +48,19 @@ const resolver = (id, opts = {}, cb, sync = false) => {
 
         if (sync) {
             const found = npmResolver.sync(normalizedPath, opts);
-            resolveCache[id] = found ? normalizedPath : undefined;
+            resolveCache[id] = found ? normalizedPath : false;
             return resolveCache[id];
         }
 
         npmResolver(normalizedPath, opts, (err, found) => {
-            resolveCache[id] = found ? normalizedPath : undefined;
+            resolveCache[id] = found ? normalizedPath : false;
 
             if (cb) {
                 return cb(err, resolveCache[id]);
             }
         });
     } catch (e) {
-        resolveCache[id] = undefined;
+        resolveCache[id] = false;
         return resolveCache[id];
     }
 };
