@@ -6,6 +6,17 @@ exports.resolveImport = function resolveImport(source, file, config) {
         basedir: path.dirname(file)
     });
 
-    return resolve.sync(source, opts);
+    const resolvedPath = resolve.sync(source, opts);
+
+    if (!resolvedPath) {
+        return {
+            found: false
+        };
+    }
+
+    return {
+        found: true,
+        path: resolvedPath
+    };
 };
 
