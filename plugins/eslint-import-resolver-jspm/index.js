@@ -1,12 +1,14 @@
 var path = require("path");
-var resolve = require("jspm-resolve");
+var jspmResolve = require("jspm-resolve");
 
-exports.resolveImport = function resolveImport(source, file, config) {
+exports.interfaceVersion = 2;
+
+exports.resolve = function resolve(source, file, config) {
     const opts = Object.assign({}, config, {
         basedir: path.dirname(file)
     });
 
-    const resolvedPath = resolve.sync(source, opts);
+    const resolvedPath = jspmResolve.sync(source, opts);
 
     if (!resolvedPath) {
         return {
