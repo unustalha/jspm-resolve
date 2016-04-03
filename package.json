@@ -9,25 +9,26 @@
   },
   "dependencies": {
     "find-root": "^1.0.0",
-    "jspm": "^0.16.15",
-    "resolve": "^1.1.6"
+    "jspm": "^0.16.32",
+    "resolve": "^1.1.7"
   },
   "devDependencies": {
     "babel": "^5.8.23",
-    "babel-eslint": "^5.0.0",
-    "chai": "^3.4.1",
-    "chalk": "^1.1.1",
+    "babel-eslint": "^6.0.2",
+    "chai": "^3.5.0",
+    "chalk": "^1.1.3",
     "conventional-changelog-cli": "^1.1.1",
     "cz-conventional-changelog": "^1.1.5",
-    "del": "^2.1.0",
-    "eslint": "2.4.0",
-    "eslint-config-nfl": "^6.1.0",
+    "del": "^2.2.0",
+    "eslint": "^2.6.0",
+    "eslint-config-nfl": "^7.0.1",
     "eslint-plugin-import": "^1.4.0",
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.2.3",
     "estraverse": "^4.2.0",
     "estraverse-fb": "^1.3.1",
-    "mocha": "^2.3.4",
+    "mocha": "^2.4.5",
+    "proxyquire": "^1.7.4",
     "rimraf": "^2.5.2"
   },
   "keywords": [

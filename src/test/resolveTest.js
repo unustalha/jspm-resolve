@@ -1,7 +1,13 @@
-import {expect} from "chai";
-import resolve from "../";
 import pkg from "../../package.json";
+import path from "path";
+const cwd = process.cwd();
+
+import {expect} from "chai";
 import pluginPkg from "../../plugins/eslint-import-resolver-jspm/package.json";
+import proxyquire from "proxyquire";
+
+import {EventEmitter} from "events";
+EventEmitter.defaultMaxListeners = Infinity;
 
 describe("jspm-resolve", () => {
     const resolveOpts = {
@@ -12,8 +18,17 @@ describe("jspm-resolve", () => {
     };
 
     const dependencies = pkg.jspm.dependencies;
+    let resolve;
 
     describe("-> resolves jspm aliases", () => {
+        // Reload module on each test
+        beforeEach(() => resolve = proxyquire("../", {
+            "jspm": {
+                method: require("jspm"),
+                "@global": true
+            }
+        }));
+
         it("-> asynchronous", (done) => {
             const alias = "alias/aliasImportTest.js";
 
@@ -42,6 +57,14 @@ describe("jspm-resolve", () => {
 
     describe("-> resolves jspm packages", () => {
         describe("-> asynchronous", () => {
+            // Reload module on each test
+            before(() => resolve = proxyquire("../", {
+                "jspm": {
+                    method: require("jspm"),
+                    "@global": true
+                }
+            }));
+
             Object.keys(dependencies).forEach((dependency) => {
                 it(dependency, (done) => {
                     resolve(dependency, resolveOpts, (err, result) => {
@@ -58,6 +81,14 @@ describe("jspm-resolve", () => {
         });
 
         describe("-> synchronous", () => {
+            // Reload module on each test
+            before(() => resolve = proxyquire("../", {
+                "jspm": {
+                    method: require("jspm"),
+                    "@global": true
+                }
+            }));
+
             Object.keys(dependencies).forEach((dependency) => {
                 it(dependency, () => {
                     const result = resolve.sync(dependency, resolveOpts);
@@ -73,6 +104,14 @@ describe("jspm-resolve", () => {
     });
 
     describe("-> identifies core modules", () => {
+        // Reload module on each test
+        before(() => resolve = proxyquire("../", {
+            "jspm": {
+                method: require("jspm"),
+                "@global": true
+            }
+        }));
+
         const testModules = [
             "child_process",
             "cluster",
@@ -100,6 +139,14 @@ describe("jspm-resolve", () => {
         });
 
         describe("-> asynchronous", () => {
+            // Reload module on each test
+            before(() => resolve = proxyquire("../", {
+                "jspm": {
+                    method: require("jspm"),
+                    "@global": true
+                }
+            }));
+
             Object.keys(pluginDevDependencies).forEach((dependency) => {
                 it(dependency, (done) => {
                     resolve(dependency, customResolveOpts, (err, result) => {
@@ -116,6 +163,14 @@ describe("jspm-resolve", () => {
         });
 
         describe("-> synchronous", () => {
+            // Reload module on each test
+            before(() => resolve = proxyquire("../", {
+                "jspm": {
+                    method: require("jspm"),
+                    "@global": true
+                }
+            }));
+
             Object.keys(pluginDevDependencies).forEach((dependency) => {
                 it(dependency, () => {
                     const result = resolve.sync(dependency, customResolveOpts);
@@ -130,12 +185,68 @@ describe("jspm-resolve", () => {
         });
     });
 
-    it("does not find npm modules", () => {
-        const testModule = "find-root";
+    context("-> node modules", () => {
+        // Reload module on each test
+        before(() => resolve = proxyquire("../", {
+            "jspm": {
+                method: require("jspm"),
+                "@global": true
+            }
+        }));
 
-        const result = resolve.sync(testModule, resolveOpts);
+        it("does not resolve npm modules", () => {
+            const testModule = "find-root";
+            const result = resolve.sync(testModule, resolveOpts);
 
-        expect(result)
-            .to.be.false;
+            expect(result)
+                .to.be.false;
+        });
+    });
+
+    context("-> file extension resolution", () => {
+        // Reload module on each test
+        beforeEach(() => resolve = proxyquire("../", {
+            "jspm": {
+                method: require("jspm"),
+                "@global": true
+            }
+        }));
+
+        it("does not resolve jspm packages with no default file extensions", () => {
+            const testModule = "./src/test/fixtures/fileExtensionTest";
+
+            const result = resolve.sync(testModule, Object.assign({}, resolveOpts, {
+                extensions: []
+            }));
+
+            expect(result)
+                .to.be.false;
+        });
+
+        it("resolves jspm packages with no defined file extensions", () => {
+            const testModule = "./src/test/fixtures/fileExtensionTest";
+
+            const result = resolve.sync(testModule, Object.assign({}, resolveOpts));
+
+            expect(result)
+                .to.be.a.string;
+
+            expect(path.relative(cwd, result))
+                .to.include(path.relative(cwd, testModule));
+        });
+
+        it("resolves jspm packages with default .js file extensions", () => {
+            const testModule = "./src/test/fixtures/fileExtensionTest";
+
+            const result = resolve.sync(testModule, Object.assign({}, resolveOpts, {
+                extensions: [".js"]
+            }));
+
+            expect(result)
+                .to.be.a.string;
+
+            expect(path.relative(cwd, result))
+                .to.include(path.relative(cwd, testModule));
+        });
     });
 });
