@@ -1,8 +1,12 @@
 {
   "name": "eslint-import-resolver-jspm",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A jspm resolver for eslint-plugin-import",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nfl/jspm-resolve.git"
+  },
   "keywords": [
     "eslint",
     "eslint-plugin-import",
@@ -12,7 +16,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "jspm-resolve": "^2.0.0"
+    "jspm-resolve": "^2.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

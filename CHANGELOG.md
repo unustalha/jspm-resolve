@@ -1,3 +1,17 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/nfl/jspm-resolve/compare/2.0.0...v2.1.0) (2016-04-03)
+
+
+### Bug Fixes
+
+* **eslint-import-resolver-jspm:** Use eslint-plugin-import resolver v2 spec ([a333e55](https://github.com/nfl/jspm-resolve/commit/a333e55))
+
+### Features
+
+* **jspm-resolve:** Add config option to require file extensions in import paths ([05658c2](https://github.com/nfl/jspm-resolve/commit/05658c2))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/nfl/jspm-resolve/compare/1.2.0...v2.0.0) (2016-03-26)
 
