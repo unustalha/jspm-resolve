@@ -1,3 +1,5 @@
+"use strict";
+
 import jspm from "jspm";
 import path from "path";
 import findRoot from "find-root";
@@ -14,6 +16,44 @@ let root, loader;
 const cwd = process.cwd();
 const resolveCache = {};
 
+const JS_EXTENSION = ".js";
+
+const checkFileExtensions = (extensions) => {
+    if (typeof extensions === "undefined") {
+        return true;
+    }
+
+    return extensions.indexOf(JS_EXTENSION) !== -1;
+};
+
+const checkJspmPackage = (filePath, modules) => {
+    if (typeof modules === "string") {
+        return filePath.startsWith(path.join(root, modules));
+    }
+
+    return modules.some(dir => {
+        return filePath.startsWith(path.join(root, dir));
+    });
+};
+
+const normalizeFileExtension = (filePath, defaultJSExtensions, {moduleDirectory}) => {
+    if (defaultJSExtensions) {
+        if ((/\.(?:css|eot|gif|jpe?g|json|otf|png|swf|svg|ttf|woff)\.js$/).test(filePath)) {
+            return filePath.replace(/\.js$/, "");
+        }
+
+        return filePath;
+    }
+
+    const isJspmPackage = checkJspmPackage(filePath, moduleDirectory);
+
+    if (!isJspmPackage || filePath.endsWith(JS_EXTENSION)) {
+        return filePath;
+    }
+
+    return `${filePath}${JS_EXTENSION}`;
+};
+
 const resolver = (id, opts = {}, cb, sync = false) => {
     // Return cached resolve if found
     if (resolveCache[id]) {
@@ -25,17 +65,23 @@ const resolver = (id, opts = {}, cb, sync = false) => {
     }
 
     try {
+        const defaultJSExtensions = checkFileExtensions(opts.extensions);
+
         if (!root) {
             root = opts.rootDir || findRoot(opts.basedir || cwd);
             jspm.setPackagePath(root);
             loader = jspm.Loader();
+
+            loader.config({
+                defaultJSExtensions
+            });
         }
 
-        let normalizedPath = loader.normalizeSync(id).replace("file://", "");
-
-        if ((/\.(?:css|eot|gif|jpe?g|json|otf|png|swf|svg|ttf|woff)\.js$/).test(normalizedPath)) {
-            normalizedPath = normalizedPath.replace(/\.js$/, "");
-        }
+        let normalizedPath = normalizeFileExtension(
+            loader.normalizeSync(id).replace("file://", ""),
+            defaultJSExtensions,
+            opts
+        );
 
         if (opts.pathsOverride) {
             Object.keys(opts.pathsOverride).forEach(key => {
