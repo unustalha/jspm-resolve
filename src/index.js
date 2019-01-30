@@ -38,7 +38,7 @@ const checkJspmPackage = (filePath, modules) => {
 
 const normalizeFileExtension = (filePath, defaultJSExtensions, {moduleDirectory}) => {
     if (defaultJSExtensions) {
-        if ((/\.(?:css|eot|gif|jpe?g|json|otf|png|swf|svg|ttf|woff)\.js$/).test(filePath)) {
+        if ((/\.(?:css|eot|gif|jpe?g|json|otf|png|swf|svg|ttf|woff|woff2)\.js$/).test(filePath)) {
             return filePath.replace(/\.js$/, "");
         }
 
